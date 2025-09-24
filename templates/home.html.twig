@@ -1,0 +1,38 @@
+{# templates/homepage.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %} Trailblaze | Gear up. Blaze your own trail.{% endblock %}
+
+{% block body %}
+    <section class="hero"style="background-image: url('{{ asset('images/hero/Patterns.png') }}');">
+        <div class="overlay">
+            <div class="hero-content">
+                <img src="{{ asset('images/logo-primary.png') }}" alt="Trailblaze Logo" class="logo">
+                <h1>Gear up. Blaze your own trail.</h1>
+                <p>Durable gear for hiking, camping, and all your adventures.</p>
+                <a href="{{ path('product_index') }}" class="cta-btn">Shop Now</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <h2>Why Choose Trailblaze?</h2>
+        <div class="feature-grid">
+            <div class="feature">
+                <img src="{{ asset('images/icons/mountain.png') }}" alt="Mountain Icon">
+                <h3>Adventure-Ready</h3>
+                <p>Gear built tough for the wild outdoors.</p>
+            </div>
+            <div class="feature">
+                <img src="{{ asset('images/icons/compass.png') }}" alt="Compass Icon">
+                <h3>Trusted Quality</h3>
+                <p>Reliable products tested by explorers.</p>
+            </div>
+            <div class="feature">
+                <img src="{{ asset('images/icons/campfire.png') }}" alt="Campfire Icon">
+                <h3>Eco-Friendly</h3>
+                <p>Sustainable choices for the modern adventurer.</p>
+            </div>
+        </div>
+    </section>
+{% endblock %}
