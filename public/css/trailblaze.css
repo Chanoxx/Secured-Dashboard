@@ -1,0 +1,673 @@
+/* trailblaze.css - Trailblaze Brand Styles */
+
+/* BRAND COLORS */
+:root {
+  --forest-green: #2F5233;
+  --sunset-orange: #E3572E;
+  --sand-beige: #D9C5A0;
+}
+
+/* GLOBAL RESETS */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', 'Roboto', sans-serif;
+  background: #fff;
+  color: #1A1A1A;
+  line-height: 1.6;
+  display: block; /* ✅ Important: restores natural flow for stacked sections */
+}
+
+/* ============================= */
+/* 🔝 NAVBAR STYLES             */
+/* ============================= */
+.navbar {
+  position: fixed;
+  background: rgba(13, 152, 29, 0.85);
+  backdrop-filter: blur(6px);
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  background: transparent; /* transparent over hero */
+}
+
+.navbar-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar-logo img {
+  width: 100px;
+  height: auto;
+}
+
+.navbar-logo span {
+  font-weight: 700;
+  color: #fff;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: #D9C5A0;
+}
+
+.nav-btn {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  border: 2px solid transparent;
+  padding: 8px 18px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.nav-btn:hover {
+  border-color: #fff;
+  color: var(--sand-beige);
+}
+
+.nav-btn.register {
+  background: var(--sunset-orange);
+  border: none;
+  color: #fff;
+}
+
+.nav-btn.register:hover {
+  background: #d94b24;
+}
+
+/* Responsive Navbar */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 16px 30px;
+  }
+  .navbar-logo span {
+    display: none; /* hides text to save space on mobile */
+  }
+  .nav-btn {
+    padding: 6px 14px;
+    font-size: 0.9rem;
+  }
+}
+
+/* ============================= */
+/* 🎨 NAVBAR SCROLL EFFECT       */
+/* ============================= */
+.navbar.scrolled {
+  background: #ffffff !important;
+  backdrop-filter: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar.scrolled .nav-link,
+.navbar.scrolled .nav-btn {
+  color: var(--forest-green);
+}
+
+.navbar.scrolled .nav-btn.register {
+  background: var(--sunset-orange);
+  color: #fff;
+}
+
+.navbar.scrolled .nav-link:hover {
+  color: var(--sunset-orange);
+}
+
+.navbar.scrolled .nav-btn:hover {
+  border-color: var(--sunset-orange);
+}
+
+
+/* ============================= */
+/* 🏔️ LANDING PAGE STYLES        */
+/* ============================= */
+
+/* HERO SECTION */
+.hero {
+  position: relative;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+}
+
+.hero .overlay,
+.hero-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 650px;
+  padding: 20px;
+}
+
+.hero-logo {
+  width: 180px;
+  margin-bottom: 16px;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--sand-beige);
+  margin-bottom: 12px;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  margin-bottom: 24px;
+  color: #f2f2f2;
+}
+
+.cta-btn {
+  background: var(--sunset-orange);
+  color: #fff;
+  text-decoration: none;
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.cta-btn:hover {
+  background: #d94b24;
+}
+
+/* FEATURES SECTION */
+.features {
+  background: #fff;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.features h2 {
+  color: var(--forest-green);
+  font-size: 2rem;
+  margin-bottom: 50px;
+  font-weight: 700;
+}
+
+.feature-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.feature-card {
+  width: 280px;
+  background: #f5f7f6;
+  border-radius: 14px;
+  padding: 25px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+}
+
+.feature-card img {
+  width: 64px;
+  margin-bottom: 12px;
+}
+
+.feature-card h3 {
+  color: var(--forest-green);
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.feature-card p {
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* JOIN SECTION */
+.join {
+  background: var(--forest-green);
+  color: #fff;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.join h2 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.join p {
+  font-size: 1rem;
+  margin-top: 8px;
+}
+
+.join-buttons {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 12px 28px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: var(--sunset-orange);
+  color: #fff;
+  border: none;
+}
+
+.btn-primary:hover {
+  background: #d94b24;
+}
+
+.btn-secondary {
+  border: 2px solid #fff;
+  color: #fff;
+  background: transparent;
+}
+
+.btn-secondary:hover {
+  background: #fff;
+  color: var(--forest-green);
+}
+
+/* FOOTER */
+.footer {
+  background: #1b2b1b;
+  color: #ccc;
+  text-align: center;
+  padding: 25px;
+  font-size: 0.9rem;
+}
+
+/* ============================= */
+/* 🔐 LOGIN / REGISTER STYLES   */
+/* ============================= */
+
+.login-container {
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  padding: 40px;
+  width: 380px;
+  text-align: center;
+  color: #264653;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.login-container::-webkit-scrollbar {
+  width: 6px;
+}
+.login-container::-webkit-scrollbar-thumb {
+  background: var(--sunset-orange);
+  border-radius: 3px;
+}
+.login-container::-webkit-scrollbar-thumb:hover {
+  background: #d14a24;
+}
+
+.login-container img {
+  width: 150px;
+  margin-bottom: 12px;
+}
+
+.login-container h1 {
+  margin: 6px 0 18px;
+  font-size: 1.4rem;
+  color: var(--forest-green);
+}
+
+/* Form elements */
+.form-label {
+  display: block;
+  text-align: left;
+  margin-bottom: 6px;
+  color: #333;
+  font-weight: 600;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+}
+
+/* Buttons for forms */
+.btn-primary {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--sunset-orange);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 0.3s ease;
+}
+
+.btn-primary:hover {
+  filter: brightness(0.95);
+}
+
+/* Password field (show/hide icon) */
+.password-field {
+  position: relative;
+  width: 100%;
+}
+
+.password-field .form-control {
+  width: 100%;
+  padding-right: 42px;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  pointer-events: auto;
+  color: #999;
+  cursor: pointer;
+  font-size: 1.15rem;
+  transition: color 0.3s ease;
+  z-index: 10;
+}
+
+.toggle-password:hover {
+  color: var(--sunset-orange);
+}
+
+/* Alerts */
+.alert-danger {
+  color: #8b0000;
+  background: #ffecec;
+  padding: 8px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  padding: 8px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  text-align: left;
+  font-weight: 500;
+}
+
+/* ============================= */
+/* ⬅️ BACK BUTTON STYLES         */
+/* ============================= */
+.btn-back {
+  display: left;
+  margin-top: 12px;
+  padding: 10px 16px;
+  color: var(--forest-green);
+  border: 2px solid var(--forest-green);
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-back:hover {
+  background: var(--forest-green);
+  color: #fff;
+}
+
+/* Responsive Fixes */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .feature-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .login-container {
+    width: 90%;
+    max-height: 85vh;
+    padding: 30px;
+  }
+}
+
+section {
+  width: 100%;
+  display: block;
+}
+
+.hero, .features, .join, .footer {
+  width: 100%;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Ensure each section has proper vertical spacing */
+.features, .join {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+/* ============================= */
+/* 🔤 LOGIN/REGISTER LINKS FIX   */
+/* ============================= */
+
+.account-text {
+  color: #000000; /* readable dark text */
+  font-size: 0.95rem;
+  margin-top: 16px;
+}
+.login-container .account-text {
+  color: #333;              /* darker text for contrast */
+  font-weight: 500;
+  text-align: center;
+}
+
+
+.account-text a {
+  color: var(--sunset-orange);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.account-text a:hover {
+  color: #d94b24;
+}
+@media (prefers-color-scheme: dark) {
+  /* Keep text readable in both light and dark modes */
+  .account-text {
+    color: #f5f5f5; /* light gray for dark background */
+  }
+
+  .login-container {
+    background: rgba(0, 0, 0, 0.7); /* darker background for dark mode */
+    color: #fff;
+  }
+
+  .login-container .form-label {
+    color: #eee;
+  }
+}
+
+
+/* ============================= */
+/* 🌿 ABOUT SECTION              */
+/* ============================= */
+.about {
+  background: #f5f7f6;
+  padding: 100px 20px 60px;
+}
+
+.about-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: auto;
+  gap: 40px;
+}
+
+.about-text {
+  flex: 1 1 480px;
+}
+
+.about-text h2 {
+  color: var(--forest-green);
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+}
+
+.about-text p {
+  color: #444;
+  margin-bottom: 16px;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.about-image {
+  flex: 1 1 400px;
+}
+
+.about-image img {
+  width: 100%;
+  border-radius: 14px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* ============================= */
+/* 💬 TESTIMONIALS SECTION       */
+/* ============================= */
+.testimonials {
+  background: #fff;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.testimonials h2 {
+  color: var(--forest-green);
+  font-size: 2rem;
+  margin-bottom: 40px;
+  font-weight: 700;
+}
+
+.testimonial-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.testimonial-card {
+  background: #f5f7f6;
+  border-radius: 12px;
+  padding: 25px 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 280px;
+  transition: transform 0.3s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-6px);
+}
+
+.testimonial-card p {
+  font-style: italic;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+.testimonial-card h4 {
+  color: var(--sunset-orange);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+/* ============================= */
+/* 🌊 SMOOTH SCROLL EFFECT        */
+/* ============================= */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Navbar scroll active state (optional highlight) */
+.nav-link {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  margin-right: 18px;
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: var(--sand-beige);
+}

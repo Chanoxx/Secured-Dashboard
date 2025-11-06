@@ -1,0 +1,35 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: trailblaze_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: trailblaze_root_password
+      MYSQL_DATABASE: trailblaze
+      MYSQL_USER: trailblaze_user
+      MYSQL_PASSWORD: trailblaze_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - trailblaze_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: trailblaze_phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: trailblaze_user
+      PMA_PASSWORD: trailblaze_password
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+    networks:
+      - trailblaze_network
+
+networks:
+  trailblaze_network:
+
+volumes:
+  mysql_data:

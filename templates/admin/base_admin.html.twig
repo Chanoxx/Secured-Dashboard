@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="admin-container">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <img src="{{ asset('images/logo/Logo2.png') }}" alt="Trailblaze Logo">
+      <h2>Trailblaze Admin</h2>
+    </div>
+    <ul>
+      <li><a href="{{ path('admin_dashboard') }}">Dashboard</a></li>
+      <li><a href="{{ path('admin_products') }}" class="active">Manage Products</a></li>
+      <li><a href="{{ path('app_logout') }}">Logout</a></li>
+    </ul>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="dashboard-content">
+    {% block admin_content %}{% endblock %}
+  </main>
+</div>
+{% endblock %}

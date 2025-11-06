@@ -1,0 +1,124 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register | Trailblaze{% endblock %}
+
+{% block stylesheets %}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('css/trailblaze.css') }}">
+{% endblock %}
+
+{% block body %}
+<section class="hero" style="background-image: url('{{ asset('images/hero/hero-bg.png') }}');">
+    <div class="overlay"></div>
+
+    <div class="login-container">
+    <a href="{{ path('homepage') }}" class="btn-back">
+        Back to Home
+    </a>
+        <img src="{{ asset('images/logo/logo-primary.png') }}" alt="Trailblaze Logo" class="mb-3" width="120">
+        <h1>Create Your Trailblaze Account</h1>
+
+        {% for flash_error in app.flashes('verify_email_error') %}
+            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+        {% endfor %}
+
+        {{ form_start(registrationForm) }}
+
+        <div class="mb-3">
+            {{ form_label(registrationForm.firstName) }}
+            {{ form_widget(registrationForm.firstName, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(registrationForm.firstName) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(registrationForm.lastName) }}
+            {{ form_widget(registrationForm.lastName, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(registrationForm.lastName) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(registrationForm.contactNumber) }}
+            {{ form_widget(registrationForm.contactNumber, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(registrationForm.contactNumber) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(registrationForm.address) }}
+            {{ form_widget(registrationForm.address, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(registrationForm.address) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(registrationForm.email) }}
+            {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(registrationForm.email) }}
+        </div>
+
+       <div class="mb-3 password-wrapper">
+  {{ form_label(registrationForm.plainPassword, 'Password') }}
+  <div class="password-field">
+    {{ form_widget(registrationForm.plainPassword, {
+      'attr': {'class': 'form-control', 'id': 'regPassword'}
+    }) }}
+    <i class="fa-solid fa-eye toggle-password" data-target="regPassword" role="button" aria-pressed="false" title="Show password"></i>
+  </div>
+  {{ form_errors(registrationForm.plainPassword) }}
+</div>
+
+
+        <button type="submit" class="btn btn-primary w-100 mt-2">Register</button>
+
+        {{ form_end(registrationForm) }}
+
+        <p class="account-text">Already have an account?
+            <a href="{{ path('app_login') }}">Login here</a>
+        </p>
+    </div>
+</section>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.toggle-password').forEach(icon => {
+    // Try to locate the target input by data-target id first
+    let targetId = icon.getAttribute('data-target');
+    let input = targetId ? document.getElementById(targetId) : null;
+
+    // If not found, look inside the same .password-field wrapper for an input
+    if (!input) {
+      const wrapper = icon.closest('.password-field');
+      if (wrapper) {
+        input = wrapper.querySelector('input[type="password"], input[type="text"], input');
+      }
+    }
+
+    if (!input) {
+      // Nothing to do if input not found
+      console.warn('Toggle-password: target input not found for', icon);
+      return;
+    }
+
+    // Ensure icon has initial correct classes
+    if (!icon.classList.contains('fa-eye') && !icon.classList.contains('fa-eye-slash')) {
+      icon.classList.add('fa-eye');
+    }
+
+    icon.addEventListener('click', function (e) {
+      e.preventDefault();
+      const isPwd = input.getAttribute('type') === 'password';
+      input.setAttribute('type', isPwd ? 'text' : 'password');
+
+      // swap classes
+      icon.classList.toggle('fa-eye');
+      icon.classList.toggle('fa-eye-slash');
+
+      // Accessibility: update aria-label
+      icon.setAttribute('aria-pressed', String(isPwd));
+      icon.setAttribute('title', isPwd ? 'Hide password' : 'Show password');
+    });
+  });
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login | Trailblaze{% endblock %}
+
+{% block body %}
+<section class="hero" style="background-image: url('{{ asset('images/hero/hero-bg.png') }}');">
+
+    <div class="overlay"></div>
+    <div class="login-container">
+     <a href="{{ path('homepage') }}" class="btn-back">
+        Back to Home
+    </a>
+        <img src="{{ asset('images/logo/logo-primary.png') }}" alt="Trailblaze Logo">
+        <h1>Welcome Back to Trailblaze</h1>
+        {% for message in app.flashes('success') %}
+    <div class="alert alert-success" role="alert">
+        {{ message }}
+    </div>
+{% endfor %}
+
+
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        <form action="{{ path('app_login') }}" method="post">
+            <div class="form-group">
+                <label for="inputEmail" class="form-label">Email</label>
+                <input type="email" name="_username" id="inputEmail" class="form-control"
+                       value="{{ last_username }}" required autofocus>
+            </div>
+
+             <div class="mb-3 password-wrapper">
+                   <label for="inputPassword" class="form-label">Password</label>
+              <div class="password-field">
+                       <input type="password" name="_password" id="inputPassword" class="form-control" required>
+                      <i class="fa-solid fa-eye toggle-password" data-target="inputPassword"></i>
+             </div>
+             </div>
+
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+            <button type="submit" class="btn btn-primary">Login</button>
+
+
+            <p class="account-text" >Don't have an account?
+                <a href="{{ path('app_register') }}">Register here</a>
+            </p>
+        </form>
+    </div>
+</section>
+
+<script>
+document.querySelectorAll('.toggle-password').forEach(icon => {
+  icon.addEventListener('click', function() {
+    const targetId = this.getAttribute('data-target');
+    const input = document.getElementById(targetId);
+    const isPassword = input.getAttribute('type') === 'password';
+
+    input.setAttribute('type', isPassword ? 'text' : 'password');
+    this.classList.toggle('fa-eye');
+    this.classList.toggle('fa-eye-slash');
+  });
+});
+</script>
+
+{% endblock %}

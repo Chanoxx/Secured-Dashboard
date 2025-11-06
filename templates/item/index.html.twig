@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Manage Products | Trailblaze{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="admin-container">
+  <aside class="sidebar">
+    <h2>Trailblaze Admin</h2>
+    <ul>
+      <li><a href="{{ path('admin_dashboard') }}">Dashboard</a></li>
+      <li><a href="{{ path('admin_item_index') }}" class="active">Manage Products</a></li>
+      <li><a href="{{ path('app_logout') }}">Logout</a></li>
+    </ul>
+  </aside>
+
+  <main class="dashboard-content">
+    <h1>Manage Products</h1>
+
+    {% for message in app.flashes('success') %}
+      <div class="alert-success">{{ message }}</div>
+    {% endfor %}
+
+    <div style="margin-bottom: 20px;">
+      <a href="{{ path('admin_item_new') }}" class="btn-primary">+ Add New Product</a>
+    </div>
+
+    <table class="product-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in items %}
+          <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.price }}</td>
+            <td>{{ item.stock }}</td>
+            <td>
+              <a href="{{ path('admin_item_edit', {'id': item.id}) }}" class="btn-edit">Edit</a>
+              {{ include('item/_delete_form.html.twig') }}
+            </td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="5" style="text-align:center;">No products found.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </main>
+</div>
+{% endblock %}

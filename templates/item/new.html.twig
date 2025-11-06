@@ -1,0 +1,86 @@
+{% extends 'dashboard.html.twig' %}
+
+{% block title %}Add New Item{% endblock %}
+
+{% block body %}
+<div style="
+    position: relative;
+    min-height: 100vh;
+    background: url('{{ asset('images/hero/hero-bg.png') }}') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+">
+    <!-- Dark overlay -->
+    <div style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 0;
+    "></div>
+
+    <!-- Form container -->
+    <section class="features" style="position: relative; z-index: 1; color: white; text-align: center;">
+        <h2 style="
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            color: #ffffff;
+            background: rgba(47, 82, 51, 0.8);
+            display: inline-block;
+            padding: 10px 25px;
+            border-radius: 8px;
+        ">
+            Add New Item
+        </h2>
+
+        <div style="
+            max-width: 600px;
+            margin: 30px auto 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            color: #1A1A1A;
+        ">
+            {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+
+            <div style="margin-bottom: 20px;">
+                {{ form_label(form.itemName, 'Item Name', {'label_attr': {'style': 'font-family: Montserrat; color: #2F5233; font-weight: bold;'}}) }}
+                {{ form_widget(form.itemName, {'attr': {'style': 'width:100%; padding:10px; border:1px solid #ccc; border-radius:6px; font-family:Roboto;'}}) }}
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                {{ form_label(form.description, 'Description', {'label_attr': {'style': 'font-family: Montserrat; color: #2F5233; font-weight: bold;'}}) }}
+                {{ form_widget(form.description, {'attr': {'style': 'width:100%; height:120px; padding:10px; border:1px solid #ccc; border-radius:6px; font-family:Roboto; resize:none;'}}) }}
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                {{ form_label(form.quantity, 'Quantity', {'label_attr': {'style': 'font-family: Montserrat; color: #2F5233; font-weight: bold;'}}) }}
+                {{ form_widget(form.quantity, {'attr': {'style': 'width:100%; height:120px; padding:10px; border:1px solid #ccc; border-radius:6px; font-family:Roboto;resize:none;'}}) }}
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                {{ form_label(form.price, 'Price', {'label_attr': {'style': 'font-family: Montserrat; color: #2F5233; font-weight: bold;'}}) }}
+                {{ form_widget(form.price, {'attr': {'style': 'width:100%; padding:10px; border:1px solid #ccc; border-radius:6px; font-family:Roboto;'}}) }}
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                {{ form_label(form.image, 'Product Image', {'label_attr': {'style': 'font-family: Montserrat; color: #2F5233; font-weight: bold;'}}) }}
+                {{ form_widget(form.image, {'attr': {'style': 'width:100%; padding:8px; border:1px solid #ccc; border-radius:6px; font-family:Roboto; background-color:#fff;'}}) }}
+            </div>
+
+            <div style="text-align:center;">
+                <button class="cta-btn" style="border:none;">Save Item</button>
+                <a href="{{ path('app_item_index') }}" class="cta-btn" style="background-color: #E3572E; margin-left: 10px;">Cancel</a>
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </section>
+</div>
+{% endblock %}

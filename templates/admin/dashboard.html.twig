@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Trailblaze Admin | User Interface Preview{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="admin-container">
+  <aside class="sidebar">
+   <div class="sidebar-logo">
+     <img src="{{ asset('images/logo/Logo2.png') }}" alt="Trailblaze Logo">
+    <h2>Trailblaze Admin</h2>
+   </div>
+    <ul>
+      <li><a href="{{ path('admin_dashboard') }}" class="active">Dashboard</a></li>
+      <li><a href="{{ path('admin_products') }}">Manage Products</a></li>
+      <li><a href="{{ path('app_logout') }}">Logout</a></li>
+    </ul>
+  </aside>
+
+  <main class="dashboard-content">
+    <div class="dashboard-header">
+      <h1>Store Interface Overview </h1>
+      <p>This is a live preview of what users see in the Trailblaze store.</p>
+    </div>
+
+    <!-- ✅ Preview section -->
+    <section class="product-section">
+      <h2>Live Store Products</h2>
+      <div class="shop-preview-grid">
+        {% for product in products %}
+          <div class="shop-card">
+              <img src="{{ product.image ? asset('uploads/products/' ~ product.image) : asset('images/default-product.png') }}" alt="{{ product.itemName }}">
+            <h3>{{ product.itemName }}</h3>
+            <p class="price">₱{{ product.price|number_format(2, '.', ',') }}</p>
+            <p class="stock">{{ product.Quantity }} in stock</p>
+          </div>
+        {% else %}
+          <p>No products are currently displayed in the store.</p>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+</div>
+{% endblock %}

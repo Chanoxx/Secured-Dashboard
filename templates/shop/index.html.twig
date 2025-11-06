@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Trailblaze Dashboard{% endblock %}
+
+{% block body %}
+<section class="dashboard">
+    <div class="container">
+        <h1>Welcome to <span style="color:#E3572E;">Trailblaze</span> Gear Store</h1>
+
+        {% if app.user %}
+            <p>Hello, {{ app.user.email }} 👋</p>
+            <div class="product-grid">
+                <div class="product-card">
+                    <img src="{{ asset('images/products/backpack.jpg') }}" alt="Backpack">
+                    <h3>Hiking Backpack</h3>
+                    <p>₱1,499</p>
+                    <button class="btn-buy">Add to Cart</button>
+                </div>
+                <div class="product-card">
+                    <img src="{{ asset('images/products/tent.jpg') }}" alt="Tent">
+                    <h3>2-Person Tent</h3>
+                    <p>₱3,299</p>
+                    <button class="btn-buy">Add to Cart</button>
+                </div>
+                <div class="product-card">
+                    <img src="{{ asset('images/products/boots.jpg') }}" alt="Boots">
+                    <h3>Trail Boots</h3>
+                    <p>₱2,599</p>
+                    <button class="btn-buy">Add to Cart</button>
+                </div>
+            </div>
+        {% else %}
+            <p>You must <a href="{{ path('app_login') }}">log in</a> to shop.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
