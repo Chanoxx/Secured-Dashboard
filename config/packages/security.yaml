@@ -1,12 +1,14 @@
 security:
-    password_hashers:
-        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
-
     providers:
-        app_user_provider:
-            entity:
-                class: App\Entity\User
-                property: email
+        in_memory:
+            memory:
+                users:
+                    admin:
+                        password: '$2y$13$z9NwU6dLIMIdmY/ULIBmOeK6iY2cCNXljpY3dU7lBcKBfZCHpJoAO' # password = admin123
+                        roles: ['ROLE_ADMIN']
+                    user:
+                        password: '$2y$13$Kj7Z7M3iJQ3/vkK5gqYh7eyIKw.CEWRABbDd1E0DMZkO.YxwRO4jO' # password = user123
+                        roles: ['ROLE_USER']
 
     firewalls:
         # Disable security for dev tools (profiler, assets, etc.)
@@ -17,11 +19,10 @@ security:
         # Main firewall — handles login, roles, etc.
         main:
             lazy: true
-            provider: app_user_provider
-
-            # ✅ Use your custom authenticator instead of default form_login
+            provider: in_memory
+            http_basic:
+                realm: 'Trailblaze Admin Area'
             custom_authenticator: App\Security\AppCustomAuthenticator
-
             logout:
                 path: app_logout
                 target: app_login  # After logout, go back to login page
@@ -29,11 +30,10 @@ security:
     # Access control rules
     access_control:
         # Public pages (no login required)
-        - { path: ^/(login|register)$, roles: PUBLIC_ACCESS }
-
+        # - { path: ^/(login|register)$, roles: PUBLIC_ACCESS }
+        - { path: ^/dashboard, roles: ROLE_USER }
         # Regular users can access shop pages
         - { path: ^/shop, roles: ROLE_USER }
-
         # Admin-only access for dashboard and management pages
         - { path: ^/admin, roles: ROLE_ADMIN }
 
