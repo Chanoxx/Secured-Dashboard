@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Orders{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/shop.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="shop-container">
+
+    <div class="shop-header">
+        <h1>My Orders</h1>
+    </div>
+
+    {% if orders is empty %}
+        <p class="no-products">You have no orders yet.</p>
+    {% else %}
+
+        {% for order in orders %}
+        <div class="order-box">
+
+            <div class="order-header">
+                <h3>Order #{{ order.id }}</h3>
+                <span class="order-status">{{ order.paymentMethod }}</span>
+            </div>
+
+            <p class="order-date">📅 {{ order.createdAt|date('F d, Y h:i A') }}</p>
+
+            <div class="order-items">
+                {% for item in order.orderItems %}
+                <div class="order-item">
+                    <div class="order-item-info">
+                        <h4>{{ item.name }}</h4>
+                        <p>{{ item.quantity }} pcs</p>
+                        <p class="item-subtotal">Subtotal: ₱{{ item.subtotal|number_format(2) }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="order-footer">
+                <p class="order-total">Total Amount: 
+                    <strong>₱{{ order.totalAmount|number_format(2) }}</strong>
+                </p>
+
+                <div class="order-actions">
+                    
+
+                   
+                        <a href="{{ path('order_cancel', {'id': order.id}) }}"
+                           class="cancel-btn"
+                           onclick="return confirm('Cancel this order?');">
+                           Cancel Order
+                        </a>
+                
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+
+    {% endif %}
+</div>
+{% endblock %}

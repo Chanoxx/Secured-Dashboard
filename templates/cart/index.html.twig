@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Your Cart | Trailblaze{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/shop.css') }}">
+{% endblock %}
+
+{% block body %}
+
+<div class="shop-container">
+
+    <div class="shop-header">
+        <h1>Your Cart</h1>
+    </div>
+
+    {% if cart is empty %}
+        <p class="no-products">Your cart is empty.</p>
+    {% else %}
+
+    <div class="cart-table">
+
+        {% set total = 0 %}
+
+        {# THE ONLY FORM FOR CHECKOUT #}
+        <form action="{{ path('cart_checkout') }}" method="POST" id="checkoutForm">
+
+            {% for item in cart %}
+                {% set subtotal = item.product.price * item.quantity %}
+
+                <label class="cart-row clickable"
+       onclick="if(event.target.type !== 'checkbox') window.location='{{ path('cart_item_edit', {id: item.id}) }}'">
+
+    <input type="checkbox"
+           onclick="event.stopPropagation();"
+           class="cart-check"
+           name="selected_items[]"
+           value="{{ item.id }}"
+           data-price="{{ item.product.price }}"
+           data-qty="{{ item.quantity }}"
+           onchange="recalculateTotal()">
+
+    <img src="{{ asset('uploads/products/' ~ item.product.image) }}" class="cart-img">
+
+    <div class="cart-info">
+        <h3>{{ item.product.itemName }}</h3>
+        <p>₱{{ item.product.price|number_format(2, '.', ',') }}</p>
+        <p class="subtotal">Subtotal: ₱{{ subtotal|number_format(2, '.', ',') }}</p>
+    </div>
+
+    <a href="{{ path('cart_remove', {id: item.id}) }}"
+       class="remove-btn"
+       onclick="event.stopPropagation(); return confirm('Remove this item?');">
+        Remove
+    </a>
+
+</label>
+
+
+            {% endfor %}
+
+            <div class="cart-total-box">
+                <h2>Total: ₱<span id="totalDisplay">0.00</span></h2>
+                <button type="submit" class="checkout-btn">Proceed to Checkout</button>
+            </div>
+
+        </form>
+    </div>
+
+    {% endif %}
+
+</div>
+
+<script>
+function recalculateTotal() {
+    let checks = document.querySelectorAll(".cart-check");
+    let total = 0;
+
+    checks.forEach(chk => {
+        if (chk.checked) {
+            let price = parseFloat(chk.dataset.price);
+            let qty = parseInt(chk.dataset.qty);
+            total += price * qty;
+        }
+    });
+
+    document.getElementById("totalDisplay").innerText = total.toFixed(2);
+}
+</script>
+
+{% endblock %}

@@ -11,11 +11,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use App\Service\ActivityLogger;
 
 #[IsGranted('ROLE_ADMIN')]
 #[Route('/admin/item')]
 final class ItemController extends AbstractController
 {
+    private ActivityLogger $logger;
+
+    public function __construct(ActivityLogger $logger)
+    {
+        $this->logger = $logger;
+    }
+
     #[Route('/', name: 'admin_item_index', methods: ['GET'])]
     public function index(ItemRepository $itemRepository): Response
     {
@@ -34,6 +42,8 @@ final class ItemController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($item);
             $entityManager->flush();
+
+            $this->logger->log("Admin created item", "Item ID: " . $item->getId());
 
             $this->addFlash('success', 'Product added successfully!');
 
@@ -63,6 +73,8 @@ final class ItemController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->logger->log("Admin updated item", "Item ID: " . $item->getId());
+
             $this->addFlash('success', 'Product updated successfully!');
 
             return $this->redirectToRoute('admin_item_index', [], Response::HTTP_SEE_OTHER);
@@ -77,9 +89,12 @@ final class ItemController extends AbstractController
     #[Route('/{id}', name: 'admin_item_delete', methods: ['POST'])]
     public function delete(Request $request, Item $item, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$item->getId(), $request->getPayload()->getString('_token'))) {
+        // keep your CSRF logic unchanged; ensure you access token via $request->request->_token if needed
+        if ($this->isCsrfTokenValid('delete'.$item->getId(), $request->request->get('_token'))) {
             $entityManager->remove($item);
             $entityManager->flush();
+
+            $this->logger->log("Admin deleted item", "Item ID: " . $item->getId());
 
             $this->addFlash('success', 'Product deleted successfully!');
         }

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ product.itemName }} | Trailblaze{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/shop.css') }}">
+{% endblock %}
+
+{% block body %}
+
+<div class="product-page-container">
+
+    <div class="product-img-box-large">
+        <img src="{{ asset('uploads/products/' ~ product.image) }}">
+    </div>
+
+    <div class="product-info-box">
+
+        <h1>{{ product.itemName }}</h1>
+        <p class="desc">{{ product.description }}</p>
+
+        <p class="price">₱{{ product.price|number_format(2, '.', ',') }}</p>
+<form action="{{ path('buy_now') }}" method="POST">
+
+    <input type="hidden" name="id" value="{{ product.id }}">
+    <input type="hidden" name="name" value="{{ product.itemName }}">
+    <input type="hidden" name="price" value="{{ product.price }}">
+    <input type="hidden" name="image" value="{{ product.image }}">
+
+    <label>Quantity:</label>
+    <input type="number" name="qty" value="1" min="1">
+
+    <button type="submit" class="btn-buy-now">Buy Now</button>
+</form>
+
+
+
+
+
+        <a href="{{ path('shop') }}" class="btn-back">Back to Shop</a>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,47 +1,44 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/base_admin.html.twig' %}
 
-{% block title %}Trailblaze Admin | User Interface Preview{% endblock %}
+{% block admin_title %}Dashboard - Trailblaze Admin{% endblock %}
 
-{% block stylesheets %}
-<link rel="stylesheet" href="{{ asset('css/admin.css') }}">
-{% endblock %}
+{% block admin_content %}
 
-{% block body %}
-<div class="admin-container">
-  <aside class="sidebar">
-   <div class="sidebar-logo">
-     <img src="{{ asset('images/logo/Logo2.png') }}" alt="Trailblaze Logo">
-    <h2>Trailblaze Admin</h2>
-   </div>
-    <ul>
-      <li><a href="{{ path('admin_dashboard') }}" class="active">Dashboard</a></li>
-      <li><a href="{{ path('admin_products') }}">Manage Products</a></li>
-      <li><a href="{{ path('app_logout') }}">Logout</a></li>
-    </ul>
-  </aside>
+<div class="dashboard-header">
+    <h1>Welcome, Admin 👋</h1>
+    <p>Here’s what’s happening in your store.</p>
+</div>
 
-  <main class="dashboard-content">
-    <div class="dashboard-header">
-      <h1>Store Interface Overview </h1>
-      <p>This is a live preview of what users see in the Trailblaze store.</p>
+
+<section class="product-section">
+
+    <div class="product-header">
+        <h2>Live Store Preview</h2>
     </div>
 
-    <!-- ✅ Preview section -->
-    <section class="product-section">
-      <h2>Live Store Products</h2>
-      <div class="shop-preview-grid">
+    <div class="shop-preview-grid">
         {% for product in products %}
-          <div class="shop-card">
-              <img src="{{ product.image ? asset('uploads/products/' ~ product.image) : asset('images/default-product.png') }}" alt="{{ product.itemName }}">
-            <h3>{{ product.itemName }}</h3>
-            <p class="price">₱{{ product.price|number_format(2, '.', ',') }}</p>
-            <p class="stock">{{ product.Quantity }} in stock</p>
-          </div>
+            <div class="shop-card">
+                <div class="image-container">
+                    <img 
+                        src="{{ product.image 
+                                ? asset('uploads/products/' ~ product.image) 
+                                : asset('images/default-product.png') 
+                        }}" 
+                        alt="{{ product.itemName }}">
+                </div>
+
+                <h3 class="product-name">{{ product.itemName }}</h3>
+                <p class="description">{{ product.description|default('No description') }}</p>
+
+                <p class="price">₱{{ product.price|number_format(2, '.', ',') }}</p>
+                <p class="stock">{{ product.quantity }} in stock</p>
+            </div>
         {% else %}
-          <p>No products are currently displayed in the store.</p>
+            <p>No products available.</p>
         {% endfor %}
-      </div>
-    </section>
-  </main>
-</div>
+    </div>
+
+</section>
+
 {% endblock %}

@@ -1,0 +1,117 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Checkout | Trailblaze{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/shop.css') }}">
+{% endblock %}
+
+{% block body %}
+
+<div class="shop-container">
+
+    <div class="shop-header">
+        <h1>Checkout</h1>
+        <p>Review your order and enter required details.</p>
+    </div>
+
+    {% if cart is empty %}
+        <p class="no-products">Your cart is empty.</p>
+    {% else %}
+
+    <div class="checkout-grid">
+
+        <!-- LEFT SIDE - SHIPPING INFO -->
+        <div class="checkout-form-box">
+            <h2 class="checkout-form">Shipping Details</h2>
+
+            <form action="{{  path('cart_confirm_order') }}" method="POST" class="checkout-form">
+
+                <label class="form-label">Full Name:</label>
+                <input type="text" name="fullName" class="form-input" required>
+
+                <label class="form-label">Address:</label>
+                <textarea name="address" rows="3" class="form-textarea" required></textarea>
+
+                <label class="form-label">Phone Number:</label>
+                <input type="text" name="phone" class="form-input" required>
+
+                <label class="form-label">Payment Method:</label>
+                <select name="paymentMethod" class="form-input" required>
+                    <option value="COD">Cash on Delivery</option>
+                    <option value="GCash">GCash</option>
+                    <option value="PayMaya">PayMaya</option>
+                    <option value="BankTransfer">Bank Transfer</option>
+                </select>
+
+                {# 🌟 IMPORTANT:
+                   SUPPORT BOTH CHECKOUT TYPES:
+                   1. Regular cart items → item.id exists
+                   2. Buy Now cart → item has NO id, we pass product.id
+                #}
+
+                {% for item in cart %}
+                    {% if item.id is defined %}
+                        <input type="hidden" name="selected_items[]" value="{{ item.id }}">
+                    {% else %}
+                        <input type="hidden" name="selected_items[]" value="{{ item.product.id }}">
+                    {% endif %}
+                {% endfor %}
+
+                <button type="submit" class="checkout-btn">
+                    Confirm Order
+                </button>
+
+            </form>
+        </div>
+
+
+        <!-- RIGHT SIDE - ORDER SUMMARY -->
+        <div class="checkout-summary-box">
+            <h2 class="section-title">Order Summary</h2>
+
+            {% set total = 0 %}
+
+            {% for item in cart %}
+
+                {# 🌟 Determine product + quantity (works for both cart types) #}
+                {% if item.product is defined %}
+                    {% set product = item.product %}
+                    {% set qty = item.quantity %}
+                {% else %}
+                    {# Buy Now array format #}
+                    {% set product = item.product %}
+                    {% set qty = item.quantity %}
+                {% endif %}
+
+                {% set subtotal = product.price * qty %}
+                {% set total = total + subtotal %}
+
+                <div class="summary-row">
+                    <div class="summary-item-name">
+                        {{ product.itemName }}
+                    </div>
+
+                    <div class="summary-item-details">
+                        <span class="summary-price">₱{{ product.price|number_format(2) }}</span>
+                        <span class="summary-qty"> × {{ qty }}</span>
+                    </div>
+
+                    <div class="summary-subtotal">
+                        Subtotal: ₱{{ subtotal|number_format(2) }}
+                    </div>
+                </div>
+
+            {% endfor %}
+
+            <hr class="summary-divider">
+
+            <h3 class="summary-total">Total: ₱{{ total|number_format(2) }}</h3>
+        </div>
+
+    </div>
+
+    {% endif %}
+</div>
+
+{% endblock %}

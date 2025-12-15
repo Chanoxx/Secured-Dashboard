@@ -1,50 +1,54 @@
+{# templates/item/edit.html.twig #}
 {% extends 'admin/base_admin.html.twig' %}
 
-{% block title %}Edit Item | Trailblaze Admin{% endblock %}
+{% block admin_title %}Edit Item - Trailblaze Admin{% endblock %}
 
 {% block admin_content %}
-<div class="dashboard-header">
-  <h1>Edit Product 🛠️</h1>
-  <p>Modify the details of your product below.</p>
-</div>
-
-<section class="add-product-form">
-  <h2>Edit Item</h2>
-
-  {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
-
-  <div class="form-group">
-    {{ form_label(form.itemName, 'Item Name') }}
-    {{ form_widget(form.itemName) }}
+  <div class="dashboard-header">
+    <h1>Edit Item</h1>
+    <p>Update product details below.</p>
   </div>
 
-  <div class="form-group">
-    {{ form_label(form.description, 'Description') }}
-    {{ form_widget(form.description, {'attr': {'rows': 3}}) }}
-  </div>
+  <section class="product-section">
+    <h2>Edit Product</h2>
 
-  <div class="form-group">
-    {{ form_label(form.quantity, 'Quantity') }}
-    {{ form_widget(form.quantity) }}
-  </div>
+    {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+      <div class="add-product-form">
+        <div class="form-group">
+          {{ form_label(form.itemName) }}
+          {{ form_widget(form.itemName) }}
+          {{ form_errors(form.itemName) }}
+        </div>
 
-  <div class="form-group">
-    {{ form_label(form.price, 'Price') }}
-    {{ form_widget(form.price) }}
-  </div>
+        <div class="form-group">
+          {{ form_label(form.description) }}
+          {{ form_widget(form.description) }}
+          {{ form_errors(form.description) }}
+        </div>
 
-  {% if form.imageFile is defined %}
-  <div class="form-group">
-    {{ form_label(form.imageFile, 'Update Product Image') }}
-    {{ form_widget(form.imageFile) }}
-  </div>
-  {% endif %}
+        <div class="form-group">
+          {{ form_label(form.quantity) }}
+          {{ form_widget(form.quantity) }}
+          {{ form_errors(form.quantity) }}
+        </div>
 
-  <div style="text-align:center; margin-top:20px;">
-    <button type="submit" class="btn-edit">Update Item</button>
-    <a href="{{ path('admin_products') }}" class="btn-delete">Cancel</a>
-  </div>
+        <div class="form-group">
+          {{ form_label(form.price) }}
+          {{ form_widget(form.price) }}
+          {{ form_errors(form.price) }}
+        </div>
 
-  {{ form_end(form) }}
-</section>
+        {% if form.imageFile is defined %}
+          <div class="form-group">
+            {{ form_label(form.imageFile) }}
+            {{ form_widget(form.imageFile) }}
+            {{ form_errors(form.imageFile) }}
+          </div>
+        {% endif %}
+
+        <button type="submit">Update Item</button>
+        <a class="btn-delete" href="{{ path('admin_products') }}" style="text-decoration:none; margin-left:8px; display:inline-block;">Cancel</a>
+      </div>
+    {{ form_end(form) }}
+  </section>
 {% endblock %}

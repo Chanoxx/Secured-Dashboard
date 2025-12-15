@@ -1,13 +1,13 @@
 <?php
 namespace App\Security;
 
+use App\Service\ActivityLogger;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
-use Symfony\Component\Security\Http\Authenticator\Passport\Badge\PasswordUpgradeBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
@@ -16,11 +16,13 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class AppCustomAuthenticator extends AbstractAuthenticator
 {
-    public function __construct(private UrlGeneratorInterface $urlGenerator) {}
+    public function __construct(
+        private UrlGeneratorInterface $urlGenerator,
+        private ActivityLogger $logger
+    ) {}
 
     public function supports(Request $request): ?bool
     {
-        // Trigger only for /login POST
         return $request->attributes->get('_route') === 'app_login'
             && $request->isMethod('POST');
     }
@@ -41,14 +43,25 @@ class AppCustomAuthenticator extends AbstractAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        $user = $token->getUser();
+        // LOG LOGIN EVENT ✔
+        $this->logger->log("User login");
 
-        // Redirect admins to dashboard
+        $user = $token->getUser();
+         if (method_exists($user, 'isActive') && !$user->isActive()) {
+        $this->logger->log("Login blocked - disabled account", "User: " . $user->getEmail());
+
+        // Force logout + show message
+        $request->getSession()->invalidate();
+
+        return new RedirectResponse(
+            $this->urlGenerator->generate('app_login') . '?error=disabled'
+        );
+    }
+
         if (in_array('ROLE_ADMIN', $user->getRoles(), true)) {
             return new RedirectResponse($this->urlGenerator->generate('admin_dashboard'));
         }
 
-        // Redirect normal users to shop
         return new RedirectResponse($this->urlGenerator->generate('shop'));
     }
 

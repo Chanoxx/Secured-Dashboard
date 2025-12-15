@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirm Order | Trailblaze{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/shop.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="shop-container">
+
+    <div class="shop-header">
+        <h1>Confirm Your Order</h1>
+    </div>
+
+    <div class="checkout-grid">
+
+        <!-- LEFT: CUSTOMER DETAILS -->
+        <div class="checkout-form-box">
+            <h2 class="section-title">Customer Information</h2>
+
+            <p><strong>Name:</strong> {{ data.fullName }}</p>
+            <p><strong>Address:</strong> {{ data.address }}</p>
+            <p><strong>Phone:</strong> {{ data.phone }}</p>
+            <p><strong>Payment:</strong> {{ data.paymentMethod }}</p>
+
+            <a href="{{ path('buy_now_checkout') }}" class="btn-back">
+                Edit Details
+            </a>
+        </div>
+
+        <!-- RIGHT: ORDER SUMMARY -->
+        <div class="checkout-summary-box">
+            <h2 class="section-title">Order Summary</h2>
+
+            <p><strong>{{ item.name }}</strong></p>
+            <p>{{ item.qty }} × ₱{{ item.price|number_format(2) }}</p>
+
+            <hr class="summary-divider">
+
+            <h3 class="summary-total">
+                Total: ₱{{ (item.price * item.qty)|number_format(2) }}
+            </h3>
+
+            <form action="{{ path('buy_now_place') }}" method="POST">
+                <button type="submit" class="checkout-btn">Place Order</button>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

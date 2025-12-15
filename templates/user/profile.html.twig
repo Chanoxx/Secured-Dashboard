@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/shop.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="shop-container">
+
+    <div class="shop-header">
+        <h1>My Profile</h1>
+    </div>
+
+    <div class="checkout-grid">
+
+        <div class="checkout-form-box">
+            <h2>Your Information</h2>
+
+            <p><strong>Email:</strong> {{ user.email }}</p>
+
+            <p><strong>First Name:</strong> {{ user.firstName }}</p>
+            <p><strong>Last Name:</strong> {{ user.lastName }}</p>
+            <p><strong>Contact Number:</strong> {{ user.contactNumber }}</p>
+            <p><strong>Address:</strong> {{ user.address }}</p>
+
+            <a href="{{ path('shop') }}" class="btn-back" style="margin-top: 10px;">
+                Back to Shop
+            </a>
+
+            <a href="{{ path('change_password') }}" class="btn-buy-now" style="margin-top: 10px;">
+                Change Password
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

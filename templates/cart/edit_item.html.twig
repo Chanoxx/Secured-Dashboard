@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Item | Trailblaze{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/shop.css') }}">
+{% endblock %}
+
+{% block body %}
+
+<div class="shop-container">
+
+    <div class="shop-header">
+        <h1>Edit Cart Item</h1>
+    </div>
+
+    <div class="product-page">
+
+        <div class="product-img-box">
+            <img src="{{ asset('uploads/products/' ~ product.image) }}">
+        </div>
+
+        <div class="product-info-box">
+
+            <h2>{{ product.itemName }}</h2>
+
+            <p class="price">₱{{ product.price|number_format(2, '.', ',') }}</p>
+
+            <form action="{{ path('cart_item_update', {id: item.id}) }}" method="POST">
+
+                <label>Quantity:</label>
+                <input type="number"
+                       name="quantity"
+                       min="1"
+                       value="{{ item.quantity }}"
+                       class="qty-input">
+
+                <button type="submit" class="btn-update">Update Cart</button>
+            </form>
+
+            <hr>
+
+            <p class="subtotal">
+                Subtotal:
+                <strong>₱{{ (product.price * item.quantity)|number_format(2, '.', ',') }}</strong>
+            </p>
+
+            <a href="{{ path('cart') }}" class="btn-back">Back to Cart</a>
+            <form action="{{ path('cart_checkout') }}" method="POST" id="checkoutForm">
+    <input type="hidden" name="selected[]" class="selected-item-holder">
+    <button type="submit" class="checkout-btn">Proceed to Checkout</button>
+</form>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -671,3 +671,22 @@ html {
 .nav-link:hover {
   color: var(--sand-beige);
 }
+
+.btn-buy-now {
+    width: 100%;
+    padding: 10px;
+    background: #E3572E;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+    display: block;
+    margin-top: 10px;
+}
+
+.btn-buy-now:hover {
+    background: #c84320;
+}

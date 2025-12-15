@@ -1,0 +1,19 @@
+{% extends 'admin/base_admin.html.twig' %}
+
+{% block admin_title %}Admin Profile{% endblock %}
+
+{% block admin_content %}
+<div class="dashboard-header">
+    <h1>Admin Profile</h1>
+</div>
+
+<div class="profile-box">
+    <h2>{{ user.firstName }} {{ user.lastName }}</h2>
+
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Contact:</strong> {{ user.contactNumber }}</p>
+    <p><strong>Address:</strong> {{ user.address }}</p>
+
+    <a href="{{ path('admin_change_password') }}" class="btn-edit">Change Password</a>
+</div>
+{% endblock %}

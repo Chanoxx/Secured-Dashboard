@@ -21,6 +21,7 @@ public function dashboard(EntityManagerInterface $em): Response
 {
     $products = $em->getRepository(Item::class)->findAll();
 
+
     return $this->render('admin/dashboard.html.twig', [
         'products' => $products,
     ]);
@@ -118,6 +119,7 @@ public function dashboard(EntityManagerInterface $em): Response
 
         return $this->redirectToRoute('admin_products');
     }
+
 
 }
 

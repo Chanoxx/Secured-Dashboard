@@ -1,65 +1,36 @@
-{% extends 'base.html.twig' %}
+{# templates/item/show.html.twig #}
+{% extends 'admin/base_admin.html.twig' %}
 
-{% block title %}View Item{% endblock %}
+{% block admin_title %}Product Details - {{ item.itemName }}{% endblock %}
 
-{% block body %}
-<div style="
-    position: relative;
-    min-height: 100vh;
-    background: url('{{ asset('images/hero/hero-bg.png') }}') no-repeat center center fixed;
-    background-size: cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
-">
-    <!-- Dark overlay -->
-    <div style="
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.6);
-        z-index: 0;
-    "></div>
+{% block admin_content %}
+  <div class="dashboard-header">
+    <h1>Product Details</h1>
+    <p>Details for <strong>{{ item.itemName }}</strong></p>
+  </div>
 
-    <!-- Content -->
-    <section class="features" style="position: relative; z-index: 1; color: white; text-align: center;">
-        <h2 style="
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            color: #ffffff;
-            background: rgba(47, 82, 51, 0.8);
-            display: inline-block;
-            padding: 10px 25px;
-            border-radius: 8px;
-        ">
-            View Item Details
-        </h2>
-
-        <div style="
-            max-width: 600px;
-            margin: 30px auto 0 auto;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-            color: #1A1A1A;
-            text-align: left;
-        ">
-
-            <p><strong>Item Name:</strong> {{ item.ItemName }}</p>
-            <p><strong>Description:</strong> {{ item.Description }}</p>
-            <p><strong>Quantity:</strong> {{ item.Quantity }}</p>
-            <p><strong>Price:</strong> ₱{{ item.Price }}</p>
-
-            <div style="text-align:center; margin-top:20px;">
-                <a href="{{ path('app_item_index') }}" class="cta-btn" style="background-color: #2F5233;">Back to List</a>
-                <a href="{{ path('app_item_edit', {'id': item.id}) }}" class="cta-btn" style="background-color: #E3572E; margin-left: 10px;">Edit</a>
-                {{ include('item/_delete_form.html.twig') }}
-            </div>
+  <section class="product-section">
+    <div class="shop-card" style="display:flex; flex-direction:row; gap:18px;">
+      <div style="width:360px;">
+        <div class="image-container" style="height:320px;">
+          <img src="{{ item.image ? asset('uploads/products/' ~ item.image) : asset('images/default-product.png') }}" alt="{{ item.itemName }}">
         </div>
-    </section>
-</div>
+      </div>
+
+      <div style="flex:1;">
+        <h2 style="margin-top:0;">{{ item.itemName }}</h2>
+        <p class="description">{{ item.description|default('No description provided.') }}</p>
+        <p class="price" style="margin-top:12px; font-size:1.2rem;">₱{{ item.price|number_format(2, '.', ',') }}</p>
+        <p class="stock">Stock: {{ item.quantity }}</p>
+
+        <div style="margin-top:18px;">
+          <a class="btn-edit" href="{{ path('admin_product_edit', {'id': item.id}) }}">Edit</a>
+          <form action="{{ path('admin_product_delete', {'id': item.id}) }}" method="post" style="display:inline-block" onsubmit="return confirm('Delete this product?');">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ item.id) }}">
+            <button class="btn-delete" type="submit">Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
 {% endblock %}

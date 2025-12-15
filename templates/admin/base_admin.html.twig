@@ -1,27 +1,81 @@
+{# templates/admin/base_admin.html.twig #}
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    {% block admin_title %}Trailblaze Admin{% endblock %}
+{% endblock %}
+
 {% block stylesheets %}
-  <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+    
 {% endblock %}
 
 {% block body %}
 <div class="admin-container">
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="sidebar-logo">
-      <img src="{{ asset('images/logo/Logo2.png') }}" alt="Trailblaze Logo">
-      <h2>Trailblaze Admin</h2>
-    </div>
-    <ul>
-      <li><a href="{{ path('admin_dashboard') }}">Dashboard</a></li>
-      <li><a href="{{ path('admin_products') }}" class="active">Manage Products</a></li>
-      <li><a href="{{ path('app_logout') }}">Logout</a></li>
-    </ul>
-  </aside>
 
-  <!-- MAIN CONTENT -->
-  <main class="dashboard-content">
-    {% block admin_content %}{% endblock %}
-  </main>
+    {# ================================
+       SIDEBAR (Displayed on ALL admin pages)
+       ================================ #}
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <img src="{{ asset('images/logo/Logo2.png') }}" alt="Trailblaze Logo">
+            <h2>Trailblaze Admin</h2>
+            <p class="sidebar-desc">Manage store, products, and orders</p>
+        </div>
+
+        <ul>
+            <li>
+                <a href="{{ path('admin_dashboard') }}"
+                   class="{% if app.request.attributes.get('_route') == 'admin_dashboard' %}active{% endif %}">
+                   Dashboard
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ path('admin_products') }}"
+                   class="{% if app.request.attributes.get('_route') == 'admin_products' %}active{% endif %}">
+                   Manage Products
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('admin_activity_logs') }}"
+                class="{% if app.request.attributes.get('_route') == 'admin_activity_logs' %}active{% endif %}">
+                Activity Logs
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('admin_users') }}"
+                class="{% if app.request.attributes.get('_route') starts with 'admin_users' %}active{% endif %}">
+                Manage Users
+                </a>
+            </li>
+
+
+
+            <li>
+                <a href="{{ path('admin_profile') }}"
+                class="{% if app.request.attributes.get('_route') == 'admin_profile' %}active{% endif %}">
+                Profile
+                </a>
+            </li>
+
+
+            <li>
+                <a href="{{ path('app_logout') }}">
+                   Logout
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+
+    {# ================================
+       MAIN ADMIN CONTENT
+       ================================ #}
+    <main class="dashboard-content">
+        {% block admin_content %}{% endblock %}
+    </main>
+
 </div>
 {% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Buy Now | Checkout{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/shop.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="shop-container">
+
+    <div class="shop-header">
+        <h1>Checkout</h1>
+    </div>
+
+    <div class="checkout-grid">
+
+        <!-- LEFT FORM -->
+        <div class="checkout-form-box">
+            <h2 class="section-title">Shipping Details</h2>
+
+            <form action="{{ path('buy_now_confirm') }}" method="POST" class="checkout-form">
+
+                <label class="form-label">Full Name:</label>
+                <input type="text" name="fullName" class="form-input" required>
+
+                <label class="form-label">Address:</label>
+                <textarea name="address" class="form-textarea" required></textarea>
+
+                <label class="form-label">Phone:</label>
+                <input type="text" name="phone" class="form-input" required>
+
+                <label class="form-label">Payment Method:</label>
+                <select name="paymentMethod" class="form-input" required>
+                    <option value="COD">Cash on Delivery</option>
+                    <option value="GCash">GCash</option>
+                </select>
+
+                <button type="submit" class="checkout-btn">Continue</button>
+            </form>
+        </div>
+
+        <!-- RIGHT SUMMARY -->
+        <div class="checkout-summary-box">
+            <h2 class="section-title">Order Summary</h2>
+
+            <p class="summary-item-name"><strong>{{ item.name }}</strong></p>
+            <p class="summary-details">{{ item.qty }} × ₱{{ item.price|number_format(2) }}</p>
+
+            <hr class="summary-divider">
+
+            <h3 class="summary-total">
+                Total: ₱{{ (item.price * item.qty)|number_format(2) }}
+            </h3>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Order Successful{% endblock %}
+
+{% block body %}
+<div class="shop-container">
+    <div class="shop-header">
+        <h1>Order Completed 🎉</h1>
+        <p>Your order #{{ order.id }} has been placed successfully.</p>
+        <a href="{{ path('shop') }}" class="btn-buy-now">Return to Shop</a>
+    </div>
+</div>
+{% endblock %}

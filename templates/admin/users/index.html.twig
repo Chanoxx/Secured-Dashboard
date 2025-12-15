@@ -1,0 +1,92 @@
+{% extends 'admin/base_admin.html.twig' %}
+
+{% block admin_title %}Manage Users{% endblock %}
+
+{% block admin_content %}
+
+<div class="dashboard-header">
+    <h1>Manage Users</h1>
+    <p>Admin can view, edit, delete, or disable accounts.</p>
+</div>
+
+<div class="user-header">
+
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <h3>Total Users</h3>
+        <p>{{ totalUsers }}</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Total Orders</h3>
+        <p>{{ totalOrders }}</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Total Products</h3>
+        <p>{{ totalItems }}</p>
+    </div>
+
+    <div class="stat-card">
+        <h3>Total Cart Items</h3>
+        <p>{{ totalCart }}</p>
+    </div>
+</div>
+    <a href="{{ path('admin_user_create') }}" class="btn-add">+ Create User</a>
+</div>
+
+<table class="user-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for u in users %}
+        <tr>
+            <td>{{ u.id }}</td>
+            <td>{{ u.firstName }} {{ u.lastName }}</td>
+            <td>{{ u.email }}</td>
+            <td>{{ u.roles[0] }}</td>
+
+            <td>
+                {% if u.isActive %}
+                    <span class="status-active">Active</span>
+                {% else %}
+                    <span class="status-disabled">Disabled</span>
+                {% endif %}
+            </td>
+
+ 
+
+            <td class="actions">
+                <!-- EDIT -->
+                <a href="{{ path('admin_user_edit', {'id': u.id}) }}" class="btn-edit">
+                    Edit
+                </a>
+
+                <!-- TOGGLE ACTIVE / DISABLED -->
+                <a href="{{ path('admin_user_toggle', {'id': u.id}) }}" class="btn-toggle">
+                    {% if u.isActive %} Disable {% else %} Enable {% endif %}
+                </a>
+
+                <!-- DELETE -->
+                <a href="{{ path('admin_user_delete', {'id': u.id}) }}"
+                   class="btn-delete"
+                   onclick="return confirm('Are you sure you want to delete this user?');">
+                   Delete
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
